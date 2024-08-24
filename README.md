@@ -1,4 +1,6 @@
-# Supabase Phone Auth Trial
+# Various Auth Trial
+
+- supabase を使った電話番号ログインと変更
 
 ## 環境設定
 
