@@ -1,4 +1,17 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+function getCodespaceUrl(codespaceName, port = 3000) {
+  const codeSpacePrefix = codespaceName.split('.')[0]
+  return `${codeSpacePrefix}-${port}.app.github.dev`
+}
 
-module.exports = nextConfig;
+const nextConfig = {
+  experimental: {
+    serverActions: {
+      allowedOrigins: [
+        getCodespaceUrl(process.env.CODESPACE_NAME), 'localhost:3000'
+      ],
+    },
+  },
+}
+
+module.exports = nextConfig
