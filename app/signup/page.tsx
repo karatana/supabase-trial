@@ -27,6 +27,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
       return encodedRedirect('error', '/signup', 'Error trying to sign up')
     } else {
       cookies().set('phone', phone)
+      cookies().set('verification_process', 'sms')
       return encodedRedirect(
         'success',
         '/verify',
