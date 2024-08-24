@@ -7,6 +7,7 @@ import { FormMessage, Message } from '@/components/forms/form-message'
 import { encodedRedirect } from '@/utils/utils'
 import { cookies } from 'next/headers'
 import { isString } from '@/utils/utils'
+import { incrementLoggedInCount } from '@/database/logged_in_counts'
 
 export default function Verify({ searchParams }: { searchParams: Message }) {
   const verify = async (formData: FormData) => {
@@ -50,6 +51,12 @@ export default function Verify({ searchParams }: { searchParams: Message }) {
     } else {
       cookies().delete('verification_process')
       cookies().delete('phone')
+
+      if (verificationProcess === 'sms') {
+        const result = await incrementLoggedInCount()
+        console.log('incrementLoggedInCount', result)
+      }
+
       // TODO: When updating phone number, redirect to specific page (e.g. /protected/change-phone)
       return encodedRedirect('success', '/protected', '')
     }
