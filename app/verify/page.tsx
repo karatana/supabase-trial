@@ -6,32 +6,41 @@ import { Label } from '@/components/forms/label'
 import { FormMessage, Message } from '@/components/forms/form-message'
 import { encodedRedirect } from '@/utils/utils'
 import { cookies } from 'next/headers'
+import { isString } from '@/utils/utils'
 
-export default function Signup({ searchParams }: { searchParams: Message }) {
-  const signUp = async (formData: FormData) => {
+export default function Verify({ searchParams }: { searchParams: Message }) {
+  const verify = async (formData: FormData) => {
     'use server'
-    const phone = formData.get('phone')?.toString()
+    const phone = cookies().get('phone')?.value
+    const token = formData.get('token')?.toString()
     const supabase = createClient()
 
-    if (!phone) {
-      return { error: 'Phone are required' }
+    if (!phone || !isString(phone)) {
+      return encodedRedirect(
+        'error',
+        '/signup',
+        'Session expired, please sign up again'
+      )
+    }
+    if (!token) {
+      return { error: 'Code are required' }
     }
 
-    // https://supabase.com/docs/guides/auth/phone-login#signing-in-with-phone-otp
-    const { error } = await supabase.auth.signInWithOtp({
+    // https://supabase.com/docs/guides/auth/phone-login#verifying-a-phone-otp
+    const {
+      error,
+    } = await supabase.auth.verifyOtp({
       phone,
+      token,
+      type: 'sms',
     })
 
     if (error) {
       console.error(error.code + ' ' + error.message)
-      return encodedRedirect('error', '/signup', 'Error trying to sign up')
+      return encodedRedirect('error', '/verify', 'Error trying to sign up')
     } else {
-      cookies().set('phone', phone)
-      return encodedRedirect(
-        'success',
-        '/verify',
-        'Thanks for signing is! Please check your SMS for a verification code.'
-      )
+      cookies().delete('phone')
+      return encodedRedirect('success', '/protected', '')
     }
   }
 
@@ -67,12 +76,12 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
       </Link>
 
       <form className="flex flex-col w-full justify-center gap-2 text-foreground [&>input]:mb-6 max-w-md">
-        <h1 className="text-2xl font-medium">Sign up/Log in</h1>
+        <h1 className="text-2xl font-medium">Verify</h1>
         <div className="mt-8 flex flex-col gap-2 [&>input]:mb-3">
-          <Label htmlFor="phone">Phone</Label>
-          <Input name="phone" placeholder="+810812345678" required />
-          <SubmitButton formAction={signUp} pendingText="Signing up...">
-            Sign up
+          <Label htmlFor="token">Verification Code</Label>
+          <Input name="token" required />
+          <SubmitButton formAction={verify} pendingText="Verifying...">
+            Verify
           </SubmitButton>
         </div>
         <FormMessage message={searchParams} />
