@@ -1,25 +1,31 @@
-import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+import { createClient } from '@/utils/supabase/server'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 export default async function AuthButton() {
-  const supabase = createClient();
+  const supabase = createClient()
 
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await supabase.auth.getUser()
 
   const signOut = async () => {
-    "use server";
+    'use server'
 
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
-  };
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    return redirect('/login')
+  }
 
   return user ? (
     <div className="flex items-center gap-4">
       Hey, {user.phone}!
+      <Link
+        href="/protected/change-phone"
+        className="py-2 px-4 flex items-center justify-center rounded-md no-underline bg-btn-background hover:bg-btn-background-hover text-sm font-medium"
+      >
+        Change phone
+      </Link>
       <form action={signOut}>
         <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
           Logout
@@ -29,17 +35,11 @@ export default async function AuthButton() {
   ) : (
     <div className="flex gap-2">
       <Link
-        href="/login"
-        className="h-8 flex items-center justify-center rounded-md no-underline text-sm font-medium px-4"
-      >
-        Login
-      </Link>
-      <Link
         href="/signup"
         className="h-8 flex items-center justify-center rounded-md no-underline bg-black text-white text-sm font-medium px-4"
       >
-        Sign up
+        Sign up/Log in
       </Link>
     </div>
-  );
+  )
 }
