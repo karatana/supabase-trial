@@ -67,13 +67,7 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
       </Link>
 
       <form className="flex flex-col w-full justify-center gap-2 text-foreground [&>input]:mb-6 max-w-md">
-        <h1 className="text-2xl font-medium">Sign up</h1>
-        <p className="text-sm text text-foreground/60">
-          Already have an account?{' '}
-          <Link className="text-blue-600 font-medium underline" href="/login">
-            Log in
-          </Link>
-        </p>
+        <h1 className="text-2xl font-medium">Sign up/Log in</h1>
         <div className="mt-8 flex flex-col gap-2 [&>input]:mb-3">
           <Label htmlFor="phone">Phone</Label>
           <Input name="phone" placeholder="+810812345678" required />
