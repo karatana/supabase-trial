@@ -7,11 +7,20 @@ function getCodespaceUrl(codespaceName, port = 3000) {
 const nextConfig = {
   experimental: {
     serverActions: {
-      allowedOrigins: [
-        getCodespaceUrl(process.env.CODESPACE_NAME), 'localhost:3000'
-      ],
+      allowedOrigins: ['localhost:3000'],
     },
   },
+}
+
+if (process.env.CODESPACE_NAME) {
+  nextConfig.experimental.serverActions.allowedOrigins.push(
+    getCodespaceUrl(process.env.CODESPACE_NAME)
+  )
+}
+if (process.env.VERCEL_URL) {
+  nextConfig.experimental.serverActions.allowedOrigins.push(
+    process.env.VERCEL_URL
+  )
 }
 
 module.exports = nextConfig
