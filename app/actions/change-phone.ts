@@ -1,10 +1,10 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
-import { redirect } from "next/navigation";
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-export default async function signUp(_prevState: unknown, formData: FormData) {
+export default async function changePhone(_prevState: unknown, formData: FormData) {
   const supabase = createClient()
   const phone = formData.get('phone')?.toString()
 
@@ -12,17 +12,17 @@ export default async function signUp(_prevState: unknown, formData: FormData) {
     return { error: 'Phone are required' }
   }
 
-  // https://supabase.com/docs/guides/auth/phone-login#signing-in-with-phone-otp
-  const { error } = await supabase.auth.signInWithOtp({
+  // https://supabase.com/docs/guides/auth/phone-login#updating-a-phone-number
+  const { error } = await supabase.auth.updateUser({
     phone,
   })
 
   if (error) {
     console.error(error.code + ' ' + error.message)
-    return { error: 'Error trying to sign up' }
+    return { error: 'Phone number update failed' }
   }
 
   cookies().set('phone', phone)
-  cookies().set('verification_process', 'sms')
+  cookies().set('verification_process', 'phone_change')
   redirect('/verify')
 }
