@@ -1,4 +1,3 @@
-import DeployButton from '@/components/DeployButton'
 import AuthButton from '@/components/AuthButton'
 import Header from '@/components/Header'
 import { getLoggedInCount } from '@/database/logged_in_counts'
@@ -14,8 +13,7 @@ export default async function ProtectedPage() {
           user
         </div>
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-            <DeployButton />
+          <div className="w-full max-w-4xl flex justify-end items-center p-3 text-sm">
             <AuthButton />
           </div>
         </nav>
