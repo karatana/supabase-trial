@@ -3,12 +3,11 @@
 import { SubmitButton } from '../../components/forms/submit-button'
 import { Input } from '@/components/forms/input'
 import { Label } from '@/components/forms/label'
-import { FormMessage, Message } from '@/components/forms/form-message'
 import { useFormState } from 'react-dom'
 import BackLink from '@/components/BackLink'
 import verify from '@/app/actions/verify'
 
-export default function Verify({ searchParams }: { searchParams: Message }) {
+export default function Verify() {
   const initialState = { error: '' }
   const [verifyState, verifyDispatch] = useFormState(verify, initialState)
 
@@ -34,7 +33,6 @@ export default function Verify({ searchParams }: { searchParams: Message }) {
             {verifyState.error}
           </div>
         )}
-        <FormMessage message={searchParams} />
       </form>
     </div>
   )
