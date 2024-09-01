@@ -14,7 +14,7 @@ export default function Verify({ searchParams }: { searchParams: Message }) {
 
   return (
     <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
-      <BackLink />
+      <BackLink to="/" />
 
       <form
         className="flex flex-col w-full justify-center gap-2 text-foreground [&>input]:mb-6 max-w-md"

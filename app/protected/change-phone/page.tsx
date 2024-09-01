@@ -1,3 +1,4 @@
+import BackLink from '@/components/BackLink'
 import { FormMessage, Message } from '@/components/forms/form-message'
 import { Input } from '@/components/forms/input'
 import { Label } from '@/components/forms/label'
@@ -46,6 +47,8 @@ export default async function ChangePhone({
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center w-full">
+      <BackLink to="/protected" />
+
       <form className="flex flex-col w-full max-w-md p-4 gap-2 [&>input]:mb-4">
         <h1 className="text-2xl font-medium">Change Phone</h1>
 
