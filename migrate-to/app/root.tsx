@@ -1,11 +1,29 @@
 import type { LinksFunction } from '@remix-run/node'
-import { Form, Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react'
+import {
+  Form,
+  Links,
+  Meta,
+  MetaFunction,
+  Scripts,
+  ScrollRestoration,
+} from '@remix-run/react'
 
 import appStylesHref from './app.css?url'
+import Header from '../components/Header'
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: appStylesHref },
 ]
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: 'Remix and Supabase Starter Kit' },
+    {
+      name: 'description',
+      content: 'The way to build apps with Remix and Supabase',
+    },
+  ]
+}
 
 export default function App() {
   return (
@@ -16,7 +34,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-background text-foreground">
         <div id="sidebar">
           <h1>Remix Contacts</h1>
           <div>
@@ -45,6 +63,35 @@ export default function App() {
             </ul>
           </nav>
         </div>
+
+        <main className="min-h-screen flex flex-col items-center">
+          <div className="flex-1 w-full flex flex-col gap-20 items-center">
+            <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
+              <div className="w-full max-w-4xl flex justify-end items-center p-3 text-sm"></div>
+            </nav>
+
+            <div className="flex-1 flex flex-col gap-20 max-w-4xl px-3">
+              <Header />
+              <main className="flex-1 flex flex-col gap-6 px-4">
+                <h2 className="font-bold text-2xl mb-4">Next steps</h2>
+              </main>
+            </div>
+
+            <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
+              <p>
+                Powered by{' '}
+                <a
+                  href="https://github.com/karatana/various-auth-trial"
+                  target="_blank"
+                  className="font-bold hover:underline"
+                  rel="noreferrer"
+                >
+                  karatana
+                </a>
+              </p>
+            </footer>
+          </div>
+        </main>
 
         <ScrollRestoration />
         <Scripts />
