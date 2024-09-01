@@ -1,10 +1,11 @@
-import {
-  Form,
-  Links,
-  Meta,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import type { LinksFunction } from '@remix-run/node'
+import { Form, Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react'
+
+import appStylesHref from './app.css?url'
+
+export const links: LinksFunction = () => [
+  { rel: 'stylesheet', href: appStylesHref },
+]
 
 export default function App() {
   return (
@@ -49,5 +50,5 @@ export default function App() {
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
