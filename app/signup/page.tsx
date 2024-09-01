@@ -24,9 +24,7 @@ export default function Signup() {
         <div className="mt-8 flex flex-col gap-2 [&>input]:mb-3">
           <Label htmlFor="phone">Phone</Label>
           <Input name="phone" placeholder="+810812345678" required />
-          <SubmitButton pendingText="Submitting...">
-            Sign up/Log in
-          </SubmitButton>
+          <SubmitButton>Sign up/Log in</SubmitButton>
         </div>
         {'error' in signUpState && signUpState.error !== '' && (
           <div className="text-red-500 border-l-2 border-red-500 px-4">
