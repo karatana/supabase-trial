@@ -5,6 +5,7 @@ import { encodedRedirect } from '@/utils/utils'
 import { cookies } from 'next/headers'
 import { isString } from '@/utils/utils'
 import { incrementLoggedInCount } from '@/database/logged_in_counts'
+import { redirect } from 'next/navigation'
 
 export default async function verify(_prevState: unknown, formData: FormData) {
   const phone = cookies().get('phone')?.value
@@ -13,6 +14,7 @@ export default async function verify(_prevState: unknown, formData: FormData) {
   const supabase = createClient()
 
   if (!phone || !isString(phone)) {
+    // TODO: クエリ文字列を処理しないため、エラー文言が表示されない
     return encodedRedirect(
       'error',
       '/signup',
@@ -26,6 +28,7 @@ export default async function verify(_prevState: unknown, formData: FormData) {
     verificationProcess !== 'sms' &&
     verificationProcess !== 'phone_change'
   ) {
+    // TODO: クエリ文字列を処理しないため、エラー文言が表示されない
     return encodedRedirect(
       'error',
       '/signup',
@@ -54,6 +57,6 @@ export default async function verify(_prevState: unknown, formData: FormData) {
   }
 
   // TODO: When updating phone number, redirect to specific page (e.g. /protected/change-phone)
-  return encodedRedirect('success', '/protected', '')
+  redirect('/protected')
 }
 
