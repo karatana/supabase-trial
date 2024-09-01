@@ -4,11 +4,12 @@ import { SubmitButton } from '../../components/forms/submit-button'
 import { Input } from '@/components/forms/input'
 import { Label } from '@/components/forms/label'
 import { useFormState } from 'react-dom'
-import signUp from '@/app/actions'
+import signUp from '@/app/actions/signup'
 import BackLink from '@/components/BackLink'
 
 export default function Signup() {
   const initialState = { error: '' }
+
   const [signUpState, signUpDispatch] = useFormState(signUp, initialState)
 
   return (

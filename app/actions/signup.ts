@@ -1,7 +1,7 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
-import { encodedRedirect } from '@/utils/utils'
+import { redirect } from "next/navigation";
 import { cookies } from 'next/headers'
 
 export default async function signUp(_prevState: unknown, formData: FormData) {
@@ -24,9 +24,5 @@ export default async function signUp(_prevState: unknown, formData: FormData) {
 
   cookies().set('phone', phone)
   cookies().set('verification_process', 'sms')
-  return encodedRedirect(
-    'success',
-    '/verify',
-    'Thanks for signing is! Please check your SMS for a verification code.'
-  )
+  redirect('/verify')
 }
