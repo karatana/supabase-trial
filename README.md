@@ -5,6 +5,7 @@
 ## 環境設定
 
 - https://supabase.com/docs/guides/auth の `Phone Auth` セクションを見ながら設定
+  - Vercel 環境では Twilio を利用中
 - GitHub のコードスペースを利用する場合、 `Authentication > URL Configuration > Site URL` にて取得したドメインを設定
 - `logged_in_counts` テーブルを作成
 
@@ -21,6 +22,8 @@
   );
   ```
 
+- Vercel を利用する場合、 supabase と production, preview にて接続する
+
 ## Clone and run locally
 
 - GitHub のコードスペースで立ち上げて、ポートを 3000 で動かす前提で `next.config.js` を実装している
@@ -35,3 +38,4 @@
 
 - https://supabase.com/docs/guides/auth/quickstarts/nextjs
 - https://supabase.com/docs/guides/auth/phone-login
+- https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables
