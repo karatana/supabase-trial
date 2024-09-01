@@ -26,9 +26,7 @@ export default async function ChangePhone() {
         <div className="mt-8 flex flex-col gap-2 [&>input]:mb-3">
           <Label htmlFor="phone">New phone</Label>
           <Input name="phone" placeholder="+810812345678" required />
-          <SubmitButton pendingText="Submitting...">
-            Change phone number
-          </SubmitButton>
+          <SubmitButton>Change phone number</SubmitButton>
         </div>
         {'error' in changePhoneState && changePhoneState.error !== '' && (
           <div className="text-red-500 border-l-2 border-red-500 px-4">

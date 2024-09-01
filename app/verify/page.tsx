@@ -27,7 +27,7 @@ export default function Verify({ searchParams }: { searchParams: Message }) {
         <div className="mt-8 flex flex-col gap-2 [&>input]:mb-3">
           <Label htmlFor="token">Verification Code</Label>
           <Input name="token" required />
-          <SubmitButton pendingText="Verifying...">Verify</SubmitButton>
+          <SubmitButton>Verify</SubmitButton>
         </div>
         {'error' in verifyState && verifyState.error !== '' && (
           <div className="text-red-500 border-l-2 border-red-500 px-4">
