@@ -82,13 +82,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     console.log('incrementLoggedInCount', result)
   }
 
+  // TODO: 成功時のHeaderを渡し、Cookieに保存しないとセッションが継続しない
+  headers.append(
+    'Set-Cookie',
+    await verificationProcessPrefs.serialize({
+      phone: null,
+      verificationProcess: null,
+    })
+  )
   return redirect('/user', {
-    headers: {
-      'Set-Cookie': await verificationProcessPrefs.serialize({
-        phone: null,
-        verificationProcess: null,
-      }),
-    },
+    headers,
   })
 }
 
