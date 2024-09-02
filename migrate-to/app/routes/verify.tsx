@@ -23,7 +23,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const phone = cookie.phone
 
   if (!phone) {
-    // TODO: エラー文言が表示されない
+    // TODO: リダイレクト時にエラートースト的なものを表示したい
     return redirect('/signup', {
       headers: {
         'Set-Cookie': await verificationProcessPrefs.serialize({
@@ -47,7 +47,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const verificationProcess = cookie.verificationProcess
 
   if (!phone) {
-    // TODO: エラー文言が表示されない
+    // TODO: リダイレクト時にエラートースト的なものを表示したい
     return redirect('/signup', {
       headers: {
         'Set-Cookie': await verificationProcessPrefs.serialize({
@@ -82,7 +82,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     console.log('incrementLoggedInCount', result)
   }
 
-  // TODO: 成功時のHeaderを渡し、Cookieに保存しないとセッションが継続しない
+  // TODO: 成功時のHeaderを渡し、Cookieに保存しないとセッションが継続しない。middleware的なものが必要かも
   headers.append(
     'Set-Cookie',
     await verificationProcessPrefs.serialize({
