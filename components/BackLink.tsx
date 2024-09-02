@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@remix-run/react'
 
 type BackLinkParams = {
   to: string
@@ -7,7 +7,7 @@ type BackLinkParams = {
 export default function BackLink(params: BackLinkParams) {
   return (
     <Link
-      href={params.to}
+      to={params.to}
       className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
     >
       <svg

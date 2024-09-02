@@ -5,8 +5,7 @@
 ## 環境設定
 
 - https://supabase.com/docs/guides/auth の `Phone Auth` セクションを見ながら設定
-  - Vercel 環境では Twilio を利用中
-- GitHub のコードスペースを利用する場合、 `Authentication > URL Configuration > Site URL` にて取得したドメインを設定
+  - SMS ベンダーには Twilio を利用している
 - `logged_in_counts` テーブルを作成
 
   ```sql
@@ -26,16 +25,15 @@
 
 ## Clone and run locally
 
-- GitHub のコードスペースで立ち上げて、ポートを 3000 で動かす前提で `next.config.js` を実装している
-- `.env.local` の設定を更新
-- あとは https://supabase.com/docs/guides/auth/quickstarts/nextjs のとおり
-
-  ```bash
-  npm run dev
-  ```
+```
+cp .env.sample .env
+npm i
+npm run dev
+```
 
 ## 参考
 
 - https://supabase.com/docs/guides/auth/quickstarts/nextjs
 - https://supabase.com/docs/guides/auth/phone-login
-- https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables
+- https://supabase.com/docs/guides/auth/server-side/creating-a-client?queryGroups=framework&framework=remix&queryGroups=environment&environment=remix-action
+- https://remix.run/docs/en/main/start/tutorial

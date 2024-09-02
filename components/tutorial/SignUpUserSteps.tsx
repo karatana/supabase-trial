@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@remix-run/react'
 import Step from './Step'
 
 export default function SignUpUserSteps() {
@@ -8,12 +8,12 @@ export default function SignUpUserSteps() {
         <p>
           Head over to the{' '}
           <Link
-            href="/signup"
+            to="/signup"
             className="font-bold hover:underline text-foreground/80"
           >
             Login
           </Link>{' '}
-          page and sign up your first user. It's okay if this is just you for
+          page and sign up your first user. It&rsquo;s okay if this is just you for
           now. Your awesome idea will have plenty of users later!
         </p>
       </Step>
