@@ -1,13 +1,16 @@
 import { json, Link, useLoaderData } from '@remix-run/react'
-import { client } from '../../utils/supabase/client'
+import { createSupabaseServerClient } from '../../utils/supabase/client'
 import Header from '../../components/Header'
 import ConnectSupabaseSteps from '../../components/tutorial/ConnectSupabaseSteps'
 import SignUpUserSteps from '../../components/tutorial/SignUpUserSteps'
+import { LoaderFunctionArgs } from '@remix-run/node'
 
-export const loader = async () => {
+export const loader = async ({request}: LoaderFunctionArgs) => {
+  const headers = new Headers()
+
   let isSupabaseConnected
   try {
-    client()
+    createSupabaseServerClient(request, headers)
     isSupabaseConnected = true
   } catch (e) {
     isSupabaseConnected = false

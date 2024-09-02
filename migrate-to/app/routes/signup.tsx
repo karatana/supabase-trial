@@ -1,10 +1,9 @@
 import { Label } from '../../components/forms/label'
 import BackLink from '../../components/BackLink'
 import { Input } from '../../components/forms/input'
-// import { SubmitButton } from '../../components/forms/submit-button'
 import { ActionFunctionArgs, json, redirect } from '@remix-run/node'
 import { useFetcher } from '@remix-run/react'
-import { client } from '../../utils/supabase/client'
+import { createSupabaseServerClient } from '../../utils/supabase/client'
 
 import { verificationProcessPrefs } from '../cookies.server'
 
@@ -13,7 +12,8 @@ interface SignupData {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const supabase = client()
+  const headers = new Headers()
+  const supabase = createSupabaseServerClient(request, headers)
   const formData = await request.formData()
   const phone = formData.get('phone')?.toString()
 

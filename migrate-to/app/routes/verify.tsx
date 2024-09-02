@@ -1,9 +1,14 @@
 import { Label } from '../../components/forms/label'
 import BackLink from '../../components/BackLink'
 import { Input } from '../../components/forms/input'
-import { ActionFunctionArgs, json, redirect } from '@remix-run/node'
+import {
+  ActionFunctionArgs,
+  json,
+  LoaderFunctionArgs,
+  redirect,
+} from '@remix-run/node'
 import { useFetcher } from '@remix-run/react'
-import { client } from '../../utils/supabase/client'
+import { createSupabaseServerClient } from '../../utils/supabase/client'
 
 import { verificationProcessPrefs } from '../cookies.server'
 import { incrementLoggedInCount } from '../../utils/supabase/loggedInCounts'
@@ -12,8 +17,29 @@ interface VerifyData {
   error?: string
 }
 
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const cookieHeader = request.headers.get('Cookie')
+  const cookie = (await verificationProcessPrefs.parse(cookieHeader)) || {}
+  const phone = cookie.phone
+
+  if (!phone) {
+    // TODO: エラー文言が表示されない
+    return redirect('/signup', {
+      headers: {
+        'Set-Cookie': await verificationProcessPrefs.serialize({
+          phone: null,
+          verificationProcess: null,
+        }),
+      },
+    })
+  }
+
+  return null
+}
+
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const supabase = client()
+  const headers = new Headers()
+  const supabase = createSupabaseServerClient(request, headers)
 
   const cookieHeader = request.headers.get('Cookie')
   const cookie = (await verificationProcessPrefs.parse(cookieHeader)) || {}
@@ -24,7 +50,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     // TODO: エラー文言が表示されない
     return redirect('/signup', {
       headers: {
-        'Set-Cookie': await verificationProcessPrefs.serialize({}),
+        'Set-Cookie': await verificationProcessPrefs.serialize({
+          phone: null,
+          verificationProcess: null,
+        }),
       },
     })
   }
@@ -49,13 +78,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   if (verificationProcess === 'sms') {
-    const result = await incrementLoggedInCount()
+    const result = await incrementLoggedInCount(supabase)
     console.log('incrementLoggedInCount', result)
   }
 
   return redirect('/user', {
     headers: {
-      'Set-Cookie': await verificationProcessPrefs.serialize({}),
+      'Set-Cookie': await verificationProcessPrefs.serialize({
+        phone: null,
+        verificationProcess: null,
+      }),
     },
   })
 }
