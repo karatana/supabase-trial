@@ -8,17 +8,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const headers = new Headers()
   const supabase = createSupabaseServerClient(request, headers)
 
-  const { error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser()
   if (error) {
     return redirect('/')
   }
 
   const loggedInCount = await getLoggedInCount(supabase)
-  return json({ loggedInCount })
+  return json({
+    user: data.user,
+    loggedInCount,
+  })
 }
 
 export default function Index() {
-  const { loggedInCount } = useLoaderData<typeof loader>()
+  const { user, loggedInCount } = useLoaderData<typeof loader>()
 
   return (
     <>
@@ -26,6 +29,7 @@ export default function Index() {
         <div className="w-full max-w-4xl flex justify-end items-center p-3 text-sm">
           {/* TODO: AuthButton */}
           <div className="flex items-center gap-4">
+            Hey, {user.phone}!
             <Link
               to="/user/change-phone"
               className="py-2 px-4 flex items-center justify-center rounded-md no-underline bg-btn-background hover:bg-btn-background-hover text-sm font-medium"
