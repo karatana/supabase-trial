@@ -3,18 +3,27 @@ import { createSupabaseServerClient } from '../../utils/supabase/client'
 import Header from '../../components/Header'
 import ConnectSupabaseSteps from '../../components/tutorial/ConnectSupabaseSteps'
 import SignUpUserSteps from '../../components/tutorial/SignUpUserSteps'
-import { LoaderFunctionArgs } from '@remix-run/node'
+import { LoaderFunctionArgs, redirect } from '@remix-run/node'
 
-export const loader = async ({request}: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const headers = new Headers()
 
+  let supabase
   let isSupabaseConnected
   try {
-    createSupabaseServerClient(request, headers)
+    supabase = createSupabaseServerClient(request, headers)
     isSupabaseConnected = true
   } catch (e) {
     isSupabaseConnected = false
   }
+
+  if (isSupabaseConnected && supabase) {
+    const { error } = await supabase.auth.getUser()
+    if (!error) {
+      return redirect('/user')
+    }
+  }
+
   return json({ isSupabaseConnected })
 }
 
@@ -25,7 +34,6 @@ export default function Index() {
     <>
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-end items-center p-3 text-sm">
-          {/* TODO: AuthButton */}
           <div className="flex gap-2">
             <Link
               to="/signup"
