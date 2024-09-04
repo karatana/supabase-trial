@@ -1,12 +1,12 @@
-import { json, Link, useFetcher, useLoaderData } from '@remix-run/react'
-import Header from '../../components/Header'
-import { getLoggedInCount } from '../../utils/supabase/loggedInCounts'
-import { createSupabaseServerClient } from '../../utils/supabase/client'
+import Header from '@components/Header'
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   redirect,
 } from '@remix-run/node'
+import { json, Link, useFetcher, useLoaderData } from '@remix-run/react'
+import { createSupabaseServerClient } from '@utils/supabase/client'
+import { getLoggedInCount } from '@utils/supabase/loggedInCounts'
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const headers = new Headers()

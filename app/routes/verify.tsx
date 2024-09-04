@@ -1,6 +1,6 @@
-import { Label } from '../../components/forms/label'
-import BackLink from '../../components/BackLink'
-import { Input } from '../../components/forms/input'
+import BackLink from '@components/BackLink'
+import { Input } from '@components/forms/input'
+import { Label } from '@components/forms/label'
 import {
   ActionFunctionArgs,
   json,
@@ -8,10 +8,9 @@ import {
   redirect,
 } from '@remix-run/node'
 import { useFetcher } from '@remix-run/react'
-import { createSupabaseServerClient } from '../../utils/supabase/client'
-
-import { verificationProcessPrefs } from '../cookies.server'
-import { incrementLoggedInCount } from '../../utils/supabase/loggedInCounts'
+import { createSupabaseServerClient } from '@utils/supabase/client'
+import { incrementLoggedInCount } from '@utils/supabase/loggedInCounts'
+import { verificationProcessPrefs } from '~/cookies.server'
 
 interface VerifyData {
   error?: string
